@@ -74,11 +74,25 @@ export const BaseEmployeeForm: FC<Props> = observer(({employees, employee, emplo
           <span className="text-danger"></span>
         </div>
         <div className="form-check">
-          <input checked={employee.gender === 'male'} onChange={handleGenderChange} type="radio" value="male" id="male" name="gender" className="form-check-input"/>
+          <input
+            checked={employee.gender === 'male'}
+            onChange={handleGenderChange}
+            type="radio"
+            value="male"
+            id="male"
+            name="gender"
+            className="form-check-input"/>
           <label className="form-check-label" htmlFor="male">Male</label>
         </div>
         <div className="form-check mb-3">
-          <input checked={employee.gender === 'female'} onChange={handleGenderChange}  type="radio" value="female" id="female" name="gender" className="form-check-input"/>
+          <input
+            checked={employee.gender === 'female'}
+            onChange={handleGenderChange}
+            type="radio"
+            value="female"
+            id="female"
+            name="gender"
+            className="form-check-input"/>
           <label className="form-check-label" htmlFor="female">Female</label>
         </div>
         <div className="mb-3">
