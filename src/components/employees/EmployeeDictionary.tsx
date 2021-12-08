@@ -4,14 +4,23 @@ import {EmployeeList} from "./EmployeeList";
 import {BaseEmployeeForm} from "./BaseEmployeeForm";
 import {useState} from "react";
 import {Employee} from "../../models";
+import {validateEmployee} from "../../utils/validateEmloyee";
 
 export const EmployeeDictionary = observer(() => {
   const stores = useStores();
   const employeeStore = stores.employee;
   const employees = employeeStore.employees;
   const [selectedId, setSelectedId] = useState<number>();
+  const [errors, setErrors] = useState({} as Errors)
 
   const addNewEmployee = () => {
+    const selected = getEmployById(selectedId);
+    const errors = validateEmployee(selected);
+    if (selected && errors.has) {
+      setErrors(errors);
+      return;
+    }
+
     const employee = employeeStore.add({
       id: -1,
       fullName: '',
@@ -22,6 +31,18 @@ export const EmployeeDictionary = observer(() => {
       colleagues: []
     });
     setSelectedId(employee.id);
+    setErrors({} as Errors);
+  }
+  const selectEmployeeId = (id: number) => {
+    const selected = getEmployById(selectedId);
+    const errors = validateEmployee(selected);
+    if (selected && errors.has) {
+      setErrors(errors)
+      return;
+    }
+
+    setSelectedId(id);
+    setErrors({} as Errors);
   }
   const getEmployById = (id?: number) => {
     return employees.find(e => e.id === id) as Employee;
@@ -38,10 +59,11 @@ export const EmployeeDictionary = observer(() => {
         <div className="col-md-8">
           <EmployeeList
             employees={employees}
-            onEmployeeClick={setSelectedId}/>
+            onEmployeeClick={selectEmployeeId}/>
         </div>
         <div className="col-md-4">
           <BaseEmployeeForm
+            initialErrors={errors}
             employeeStore={employeeStore}
             employee={getEmployById(selectedId)}/>
         </div>
@@ -49,3 +71,8 @@ export const EmployeeDictionary = observer(() => {
     </div>
   )
 })
+
+export type Errors = {
+  fullName?: string
+  has: boolean
+}

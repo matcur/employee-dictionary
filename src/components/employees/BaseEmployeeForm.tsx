@@ -1,23 +1,26 @@
-import {ChangeEvent, FC, FormEvent} from "react";
-import {Employee, EmployeeFormData} from "../../models";
+import {ChangeEvent, FC, FormEvent, useEffect, useState} from "react";
+import {Employee} from "../../models";
 import {observer} from "mobx-react";
 import {EmployeeStore} from "../../stores/EmployeeStore";
+import {Errors} from "./EmployeeDictionary";
+import {validateEmployee} from "../../utils/validateEmloyee";
 
 type Props = {
   employeeStore: EmployeeStore
   employee: Employee
+  initialErrors: Errors
 }
 
-type Errors = {
-  position?: string;
-  fullName?: string
-  has: boolean
-}
-
-export const BaseEmployeeForm: FC<Props> = observer(({employee, employeeStore}) => {
+export const BaseEmployeeForm: FC<Props> = observer((
+  {employee, employeeStore, initialErrors}) => {
   const positions = ['manager', 'developer', 'header'];
   const employees = employeeStore.employees;
   const possibleColleagues = employees.filter(e => e.id !== employee?.id);
+  const [errors, setErrors] = useState<Errors>(initialErrors);
+
+  useEffect(() => {
+    setErrors(initialErrors)
+  }, [initialErrors])
 
   const handleFullNameInput = (e: FormEvent<HTMLInputElement>) => {
     const fullName = e.currentTarget.value;
@@ -49,7 +52,12 @@ export const BaseEmployeeForm: FC<Props> = observer(({employee, employeeStore}) 
     employeeStore.update({...employee, colleagues})
   }
   const handleRemoveClick = () => {
-    employeeStore.remove(employee.id)
+    const errors = validateEmployee(employee)
+    if (!errors.has) {
+      employeeStore.remove(employee.id);
+    }
+
+    setErrors(errors);
   }
 
   const makePositionOption = (value: string, index: number) => {
@@ -59,15 +67,6 @@ export const BaseEmployeeForm: FC<Props> = observer(({employee, employeeStore}) 
         value={value}
         selected={employee?.position === value}>{value}</option>
     )
-  }
-  const validate = (employee: EmployeeFormData) => {
-    const errors = {has: false} as Errors;
-    if (employee.fullName === '') {
-      errors.fullName = 'Full name is required';
-      errors.has = true;
-    }
-
-    return errors;
   }
 
   const makeColleague = (possibleColleague: Employee, index: number) => {
@@ -87,7 +86,7 @@ export const BaseEmployeeForm: FC<Props> = observer(({employee, employeeStore}) 
         <div className="mb-3">
           <label className="form-label">Full Name</label>
           <input value={employee?.fullName?? ''} onInput={handleFullNameInput} className="form-control" name="full-name"/>
-          <span className="text-danger"></span>
+          <span className="text-danger">{errors.fullName}</span>
         </div>
         <div className="form-check">
           <input
