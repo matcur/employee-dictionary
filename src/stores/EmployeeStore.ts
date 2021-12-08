@@ -55,5 +55,11 @@ export class EmployeeStore {
   remove(id: number) {
     this.employees = this.employees.filter(e => e.id !== id);
   }
+
+  @action
+  update(employee: Employee) {
+    this.remove(employee.id);
+    this.add(employee);
+  }
 }
 
