@@ -9,7 +9,7 @@ export const EmployeeDictionary = observer(() => {
   const stores = useStores();
   const employeeStore = stores.employee;
   const employees = employeeStore.employees;
-  const [selectedId, setSelectedId] = useState(employees[0].id);
+  const [selectedId, setSelectedId] = useState<number>();
 
   const addNewEmployee = () => {
     const employee = employeeStore.add({
@@ -23,8 +23,7 @@ export const EmployeeDictionary = observer(() => {
     });
     setSelectedId(employee.id);
   }
-
-  const getEmployById = (id: number) => {
+  const getEmployById = (id?: number) => {
     return employees.find(e => e.id === id) as Employee;
   }
 
@@ -44,7 +43,6 @@ export const EmployeeDictionary = observer(() => {
         <div className="col-md-4">
           <BaseEmployeeForm
             employeeStore={employeeStore}
-            employees={employees}
             employee={getEmployById(selectedId)}/>
         </div>
       </div>

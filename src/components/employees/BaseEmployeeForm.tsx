@@ -1,11 +1,10 @@
-import {ChangeEvent, FC, FormEvent, useState} from "react";
+import {ChangeEvent, FC, FormEvent} from "react";
 import {Employee, EmployeeFormData} from "../../models";
 import {observer} from "mobx-react";
 import {EmployeeStore} from "../../stores/EmployeeStore";
 
 type Props = {
   employeeStore: EmployeeStore
-  employees: Employee[]
   employee: Employee
 }
 
@@ -15,8 +14,10 @@ type Errors = {
   has: boolean
 }
 
-export const BaseEmployeeForm: FC<Props> = observer(({employees, employee, employeeStore}) => {
+export const BaseEmployeeForm: FC<Props> = observer(({employee, employeeStore}) => {
   const positions = ['manager', 'developer', 'header'];
+  const employees = employeeStore.employees;
+  const possibleColleagues = employees.filter(e => e.id !== employee?.id);
 
   const handleFullNameInput = (e: FormEvent<HTMLInputElement>) => {
     const fullName = e.currentTarget.value;
@@ -47,6 +48,9 @@ export const BaseEmployeeForm: FC<Props> = observer(({employees, employee, emplo
     const colleagues = employees.filter(e => ids.includes(e.id.toString()));
     employeeStore.update({...employee, colleagues})
   }
+  const handleRemoveClick = () => {
+    employeeStore.remove(employee.id)
+  }
 
   const makePositionOption = (value: string, index: number) => {
     return (
@@ -65,17 +69,28 @@ export const BaseEmployeeForm: FC<Props> = observer(({employees, employee, emplo
     return errors;
   }
 
+  const makeColleague = (possibleColleague: Employee, index: number) => {
+    const isColleague = employee?.colleagues?.includes(possibleColleague)
+
+    return (
+      <option
+        key={index}
+        value={possibleColleague.id}
+        selected={isColleague}>{possibleColleague.fullName}</option>
+    )
+  }
+
   return (
     <div className="card card-body">
-      <form>
+      <div>
         <div className="mb-3">
           <label className="form-label">Full Name</label>
-          <input value={employee.fullName} onInput={handleFullNameInput} className="form-control" name="full-name"/>
+          <input value={employee?.fullName?? ''} onInput={handleFullNameInput} className="form-control" name="full-name"/>
           <span className="text-danger"></span>
         </div>
         <div className="form-check">
           <input
-            checked={employee.gender === 'male'}
+            checked={employee?.gender === 'male'}
             onChange={handleGenderChange}
             type="radio"
             value="male"
@@ -86,7 +101,7 @@ export const BaseEmployeeForm: FC<Props> = observer(({employees, employee, emplo
         </div>
         <div className="form-check mb-3">
           <input
-            checked={employee.gender === 'female'}
+            checked={employee?.gender === 'female'}
             onChange={handleGenderChange}
             type="radio"
             value="female"
@@ -103,20 +118,23 @@ export const BaseEmployeeForm: FC<Props> = observer(({employees, employee, emplo
         </div>
         <div className="mb-3">
           <label>Birthday</label>
-          <input value={employee.birthday} onChange={handleBirthdayChange} type="date" className="form-select"/>
+          <input value={employee?.birthday?? ''} onChange={handleBirthdayChange} type="date" className="form-select"/>
         </div>
         <div className="input-group mb-3">
-          <input checked={employee.fired} className="form-check-input" onChange={handleFiredChange} type="checkbox"/>
+          <input checked={employee?.fired?? ''} className="form-check-input" onChange={handleFiredChange} type="checkbox"/>
           <label> Fired</label>
         </div>
         <label>
           Colleagues
           <select className="form-select" onChange={handleColleagueChange} multiple>
-            {employees.map((e, i) => <option key={i} value={e.id}>{e.fullName}</option>)}
+            {possibleColleagues.map(makeColleague)}
           </select>
         </label>
-        <button type="submit" className="btn btn-outline-primary">Save</button>
-      </form>
+        <button
+          disabled={employee === undefined}
+          onClick={handleRemoveClick}
+          className="btn btn-outline-danger">Remove</button>
+      </div>
     </div>
   )
 })
