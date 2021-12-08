@@ -78,7 +78,6 @@ export const BaseEmployeeForm: FC<Props> = observer(({onSave, employees, initial
   const makePositionOption = (value: string, index: number) => {
     return (
       <option
-        selected={value === position.value}
         key={index}
         value={value}>{value}</option>
     )
@@ -126,7 +125,7 @@ export const BaseEmployeeForm: FC<Props> = observer(({onSave, employees, initial
         <label>
           Colleagues
           <select onChange={handleColleagueChange} multiple>
-            {employees.map(e => <option value={e.id}>{e.fullName}</option>)}
+            {employees.map((e, i) => <option key={i} value={e.id}>{e.fullName}</option>)}
           </select>
         </label>
         <button type="submit">Save</button>

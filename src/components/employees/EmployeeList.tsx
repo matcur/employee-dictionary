@@ -11,7 +11,8 @@ type Props = {
 export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick}) => {
   function makeEmployee(employee: Employee, index: number) {
     return <EmployeeItem
-      key={index} employee={employee}
+      key={index}
+      employee={employee}
       onClick={onEmployeeClick}/>;
   }
 
