@@ -1,12 +1,13 @@
 import {Employee} from "../../models";
 import {FC} from "react";
 import {EmployeeItem} from "./EmployeeItem";
+import {observer} from "mobx-react";
 
 type Props = {
   employees: Employee[]
 }
 
-export const EmployeeList: FC<Props> = ({employees}) => {
+export const EmployeeList: FC<Props> = observer(({employees}) => {
   return (
     <table className="employee-list">
       <thead>
@@ -19,11 +20,8 @@ export const EmployeeList: FC<Props> = ({employees}) => {
         </tr>
       </thead>
       <tbody>
-        {
-          employees.map(e => <EmployeeItem employee={e}/>)
-        }
+        {employees.map((e, i) => <EmployeeItem key={i} employee={e}/>)}
       </tbody>
     </table>
   )
-}
-//ФИО, пол, должность, датой рождения и признаком уволен
+})

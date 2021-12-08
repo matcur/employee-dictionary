@@ -3,7 +3,9 @@ export type Employee = {
   fullName: string
   position: string
   birthday: string
-  gender: 'male' | 'female'
+  gender: string
   fired: boolean
   colleagues?: Employee[]
-}
+};
+
+export type NewEmployee = Omit<Employee, 'id'>

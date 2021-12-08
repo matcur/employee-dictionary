@@ -1,4 +1,4 @@
-import {action, observable} from "mobx";
+import {action, makeAutoObservable, observable} from "mobx";
 import {Employee} from "../models";
 
 export class EmployeeStore {
@@ -16,7 +16,7 @@ export class EmployeeStore {
     {
       id: 2,
       fullName: 'Ivanov Ivan Ivanovich',
-      position: 'manager',
+      position: 'developer',
       birthday: '30-12-1999',
       gender: 'male',
       fired: false,
@@ -41,6 +41,10 @@ export class EmployeeStore {
       colleagues: [],
     },
   ];
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 
   @action
   add(employee: Employee) {
