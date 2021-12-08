@@ -5,9 +5,16 @@ import {observer} from "mobx-react";
 
 type Props = {
   employees: Employee[]
+  onEmployeeClick: (employee: Employee) => void
 }
 
-export const EmployeeList: FC<Props> = observer(({employees}) => {
+export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick}) => {
+  function makeEmployee(employee: Employee, index: number) {
+    return <EmployeeItem
+      key={index} employee={employee}
+      onClick={onEmployeeClick}/>;
+  }
+
   return (
     <table className="employee-list">
       <thead>
@@ -20,7 +27,7 @@ export const EmployeeList: FC<Props> = observer(({employees}) => {
         </tr>
       </thead>
       <tbody>
-        {employees.map((e, i) => <EmployeeItem key={i} employee={e}/>)}
+        {employees.map(makeEmployee)}
       </tbody>
     </table>
   )

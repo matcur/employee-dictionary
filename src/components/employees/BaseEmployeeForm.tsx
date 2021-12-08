@@ -1,11 +1,12 @@
 import {useInput} from "../../hooks/useInput";
-import {ChangeEvent, FC, FormEvent, useState} from "react";
+import {ChangeEvent, FC, FormEvent, useEffect, useState} from "react";
 import {Employee, EmployeeFormData} from "../../models";
+import {observer} from "mobx-react";
 
 type Props = {
   onSave: (employee: EmployeeFormData) => void
   employees: Employee[]
-  initialEmployee?: Employee
+  initialEmployee: Employee
 }
 
 type Errors = {
@@ -14,15 +15,22 @@ type Errors = {
   has: boolean
 }
 
-export const BaseEmployeeForm: FC<Props> = ({onSave, employees, initialEmployee}) => {
-  const fullName = useInput(initialEmployee?.fullName?? '');
-  const gender = useInput(initialEmployee?.gender?? 'male');
-  const birthday = useInput(initialEmployee?.birthday?? '');
-  const position = useInput(initialEmployee?.position?? 'manager');
-  const [fired, setFired] = useState(initialEmployee?.fired?? false);
-  const [colleagues, setColleagues] = useState<Employee[]>(initialEmployee?.colleagues?? []);
+export const BaseEmployeeForm: FC<Props> = observer(({onSave, employees, initialEmployee}) => {
+  const fullName = useInput('');
+  const gender = useInput('male');
+  const birthday = useInput('');
+  const position = useInput('manager');
+  const [fired, setFired] = useState(false);
+  const [colleagues, setColleagues] = useState<Employee[]>([]);
   const [errors, setErrors] = useState<Errors>({} as Errors);
 
+  useEffect(() => {
+    fullName.onChange(initialEmployee.fullName)
+    gender.onChange(initialEmployee.gender)
+    birthday.onChange(initialEmployee.birthday)
+    setFired(initialEmployee.fired)
+    setColleagues(initialEmployee.colleagues?? [])
+  }, [initialEmployee])
   const positions = ['manager', 'developer', 'header'];
 
   const handlePositionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -125,4 +133,4 @@ export const BaseEmployeeForm: FC<Props> = ({onSave, employees, initialEmployee}
       </form>
     </div>
   )
-}
+})
