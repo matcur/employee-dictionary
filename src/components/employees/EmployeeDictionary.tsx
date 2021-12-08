@@ -10,9 +10,6 @@ export const EmployeeDictionary = observer(() => {
 
   return (
     <div className="employee-dictionary">
-      <BaseEmployeeForm
-        onSave={employeeStore.add.bind(employeeStore)}
-        employees={employees}/>
       <EmployeeList employees={employees}/>
       <BaseEmployeeForm
         onSave={employeeStore.update.bind(employeeStore)}
