@@ -17,7 +17,7 @@ export const NewEmployeeForm: FC<Props> = ({addEmployee, employees = []}) => {
 
   const positions = ['manager', 'developer', 'header'];
 
-  function handlePositionChange(e: ChangeEvent<HTMLSelectElement>) {
+  const handlePositionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     position.onChange(e.currentTarget.value);
   }
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
