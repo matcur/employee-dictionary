@@ -1,5 +1,6 @@
 import {action, makeAutoObservable, observable} from "mobx";
-import {Employee} from "../models";
+import {Employee, EmployeeFormData} from "../models";
+import {maxId} from "../utils/maxId";
 
 export class EmployeeStore {
   @observable
@@ -47,8 +48,8 @@ export class EmployeeStore {
   }
 
   @action
-  add(employee: Employee) {
-    this.employees.push(employee);
+  add(employee: EmployeeFormData) {
+    this.employees.push({...employee, id: maxId(this.employees)});
   }
 
   @action
