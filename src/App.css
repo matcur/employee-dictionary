@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.employee-dictionary {
+.employee-dictionary__body {
   display: flex;
   justify-content: center;
 }

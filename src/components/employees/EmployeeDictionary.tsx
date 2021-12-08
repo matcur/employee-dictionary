@@ -8,12 +8,27 @@ export const EmployeeDictionary = observer(() => {
   const employeeStore = stores.employee;
   const employees = employeeStore.employees;
 
+  const addNewEmployee = () => {
+    employeeStore.add({
+      id: -1,
+      fullName: '',
+      fired: false,
+      position: 'position',
+      gender: 'male',
+      birthday: '1999-30-10',
+      colleagues: []
+    })
+  }
+
   return (
     <div className="employee-dictionary">
-      <EmployeeList employees={employees}/>
-      <BaseEmployeeForm
-        onSave={employeeStore.update.bind(employeeStore)}
-        employees={employees}/>
+      <button onClick={addNewEmployee}>Add</button>
+      <div className="employee-dictionary__body">
+        <EmployeeList employees={employees}/>
+        <BaseEmployeeForm
+          onSave={employeeStore.update.bind(employeeStore)}
+          employees={employees}/>
+      </div>
     </div>
   )
 })
