@@ -25,15 +25,23 @@ export const EmployeeDictionary = observer(() => {
 
   return (
     <div className="employee-dictionary">
-      <button onClick={addNewEmployee}>Add</button>
-      <div className="employee-dictionary__body">
-        <EmployeeList
-          employees={employees}
-          onEmployeeClick={setSelectedEmployee}/>
-        <BaseEmployeeForm
-          onSave={employeeStore.update.bind(employeeStore)}
-          employees={employees}
-          initialEmployee={selectedEmployee}/>
+      <div className="row mb-3">
+        <div className="col-md-">
+          <button className="btn btn-outline-primary" onClick={addNewEmployee}>Add</button>
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-md-8">
+          <EmployeeList
+            employees={employees}
+            onEmployeeClick={setSelectedEmployee}/>
+        </div>
+        <div className="col-md-4">
+          <BaseEmployeeForm
+            onSave={employeeStore.update.bind(employeeStore)}
+            employees={employees}
+            initialEmployee={selectedEmployee}/>
+        </div>
       </div>
     </div>
   )

@@ -93,42 +93,42 @@ export const BaseEmployeeForm: FC<Props> = observer(({onSave, employees, initial
   }
 
   return (
-    <div>
+    <div className="card card-body">
       <form onSubmit={handleSubmit}>
-        <label>
-          Full Name
-          <input {...fullName}/>
-          <strong>{errors.fullName}</strong>
-        </label>
-        <label htmlFor="">
-          Male
-          <input {...gender} type="radio" value="male" name="gender" defaultChecked/>
-        </label>
-        <label htmlFor="">
-          Female
-          <input {...gender} type="radio" value="female" name="gender"/>
-        </label>
-        <label>
-          Position
-          <select onChange={handlePositionChange}>
+        <div className="mb-3">
+          <label className="form-label">Full Name</label>
+          <input {...fullName} className="form-control" name="full-name"/>
+          <span className="text-danger">{errors.fullName}</span>
+        </div>
+        <div className="form-check">
+          <input {...gender} type="radio" value="male" id="male" name="gender" className="form-check-input" defaultChecked/>
+          <label className="form-check-label" htmlFor="male">Male</label>
+        </div>
+        <div className="form-check mb-3">
+          <input {...gender} type="radio" value="female" id="female" name="gender" className="form-check-input"/>
+          <label className="form-check-label" htmlFor="female">Female</label>
+        </div>
+        <div className="mb-3">
+          <label>Position</label>
+          <select name="position" className="form-select" onChange={handlePositionChange}>
             {positions.map(makePositionOption)}
           </select>
-        </label>
-        <label>
-          Birthday
-          <input {...birthday} type="date"/>
-        </label>
-        <label>
-          Fired
-          <input checked={fired} onChange={handleFiredChange} type="checkbox"/>
-        </label>
+        </div>
+        <div className="mb-3">
+          <label>Birthday</label>
+          <input {...birthday} type="date" className="form-select"/>
+        </div>
+        <div className="input-group mb-3">
+          <input checked={fired} className="form-check-input" onChange={handleFiredChange} type="checkbox"/>
+          <label> Fired</label>
+        </div>
         <label>
           Colleagues
-          <select onChange={handleColleagueChange} multiple>
+          <select className="form-select" onChange={handleColleagueChange} multiple>
             {employees.map((e, i) => <option key={i} value={e.id}>{e.fullName}</option>)}
           </select>
         </label>
-        <button type="submit">Save</button>
+        <button type="submit" className="btn btn-outline-primary">Save</button>
       </form>
     </div>
   )

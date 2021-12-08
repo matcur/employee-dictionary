@@ -17,7 +17,7 @@ export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick}) =
   }
 
   return (
-    <table className="employee-list">
+    <table className="employee-list table table-hover table-bordered mr-2">
       <thead>
         <tr>
           <td>Full Name</td>
