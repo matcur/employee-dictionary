@@ -7,13 +7,20 @@ type Props = {
   employees?: Employee[]
 }
 
+type Errors = {
+  position?: string;
+  fullName?: string
+  has: boolean
+}
+
 export const NewEmployeeForm: FC<Props> = ({addEmployee, employees = []}) => {
   const fullName = useInput('');
-  const gender = useInput('');
+  const gender = useInput('male');
   const birthday = useInput('');
-  const position = useInput('');
+  const position = useInput('manager');
   const [fired, setFired] = useState(false);
-  const [colleagues, setColleagues] = useState<Employee[]>([])
+  const [colleagues, setColleagues] = useState<Employee[]>([]);
+  const [errors, setErrors] = useState<Errors>({} as Errors);
 
   const positions = ['manager', 'developer', 'header'];
 
@@ -22,14 +29,23 @@ export const NewEmployeeForm: FC<Props> = ({addEmployee, employees = []}) => {
   }
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addEmployee({
+
+    const employee = {
       fullName: fullName.value,
       gender: gender.value,
       position: position.value,
       birthday: birthday.value,
       fired: fired,
       colleagues: colleagues,
-    });
+    };
+    const errors = validate(employee);
+    if (errors.has) {
+      setErrors(errors)
+      return;
+    }
+
+    setErrors({} as Errors)
+    addEmployee(employee);
     clearForm();
   }
   const handleFiredChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +75,15 @@ export const NewEmployeeForm: FC<Props> = ({addEmployee, employees = []}) => {
         value={value}>{value}</option>
     )
   }
+  const validate = (employee: NewEmployee) => {
+    const errors = {has: false} as Errors;
+    if (employee.fullName === '') {
+      errors.fullName = 'Full name is required';
+      errors.has = true;
+    }
+
+    return errors;
+  }
 
   return (
     <div>
@@ -66,10 +91,11 @@ export const NewEmployeeForm: FC<Props> = ({addEmployee, employees = []}) => {
         <label>
           Full Name
           <input {...fullName}/>
+          <strong>{errors.fullName}</strong>
         </label>
         <label htmlFor="">
           Male
-          <input {...gender} type="radio" value="male" name="gender"/>
+          <input {...gender} type="radio" value="male" name="gender" defaultChecked/>
         </label>
         <label htmlFor="">
           Female
