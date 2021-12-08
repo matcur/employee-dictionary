@@ -1,17 +1,19 @@
-import {NewEmployee} from "../../models";
+import {Employee, NewEmployee} from "../../models";
 import {ChangeEvent, FC, FormEvent, useState} from "react";
 import {useInput} from "../../hooks/useInput";
 
 type Props = {
   addEmployee: (employee: NewEmployee) => void
+  employees?: Employee[]
 }
 
-export const NewEmployeeForm: FC<Props> = ({addEmployee}) => {
+export const NewEmployeeForm: FC<Props> = ({addEmployee, employees = []}) => {
   const fullName = useInput('');
   const gender = useInput('');
   const birthday = useInput('');
   const position = useInput('');
   const [fired, setFired] = useState(false);
+  const [colleagues, setColleagues] = useState<Employee[]>([])
 
   const positions = ['manager', 'developer', 'header'];
 
@@ -26,11 +28,20 @@ export const NewEmployeeForm: FC<Props> = ({addEmployee}) => {
       position: position.value,
       birthday: birthday.value,
       fired: fired,
+      colleagues: colleagues,
     });
     clearForm();
   }
   const handleFiredChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFired(e.currentTarget.checked);
+  }
+  const handleColleagueChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedOptions = e.currentTarget.selectedOptions;
+    const ids: string[] = [];
+    for (let i = 0; i < selectedOptions.length; i++) {
+      ids.push(selectedOptions[i].value)
+    }
+    setColleagues(employees.filter(e => ids.includes(e.id.toString())))
   }
   const clearForm = () => {
     fullName.onChange('');
@@ -77,6 +88,12 @@ export const NewEmployeeForm: FC<Props> = ({addEmployee}) => {
         <label>
           Fired
           <input checked={fired} onChange={handleFiredChange} type="checkbox"/>
+        </label>
+        <label>
+          Colleagues
+          <select onChange={handleColleagueChange} multiple>
+            {employees.map(e => <option value={e.id}>{e.fullName}</option>)}
+          </select>
         </label>
         <button type="submit">Add</button>
       </form>

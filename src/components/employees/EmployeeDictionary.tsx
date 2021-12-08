@@ -8,16 +8,19 @@ import {maxId} from "../../utils/maxId";
 export const EmployeeDictionary = observer(() => {
   const stores = useStores();
   const employeeStore = stores.employee;
+  const employees = employeeStore.employees;
 
   const addEmployee = (newEmployee: NewEmployee) => {
-    const employee = {...newEmployee, id: maxId(employeeStore.employees)};
+    const employee = {...newEmployee, id: maxId(employees)};
     employeeStore.add(employee);
   }
 
   return (
     <div className="employee-dictionary">
-      <NewEmployeeForm addEmployee={addEmployee}/>
-      <EmployeeList employees={employeeStore.employees}/>
+      <NewEmployeeForm
+        addEmployee={addEmployee}
+        employees={employees}/>
+      <EmployeeList employees={employees}/>
     </div>
   )
 })
