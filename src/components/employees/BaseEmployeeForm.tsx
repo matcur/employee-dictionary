@@ -40,7 +40,7 @@ export const BaseEmployeeForm: FC<Props> = observer(({onSave, employees, initial
     e.preventDefault();
 
     const employee = {
-      id: -1,
+      id: initialEmployee.id,
       fullName: fullName.value,
       gender: gender.value,
       position: position.value,

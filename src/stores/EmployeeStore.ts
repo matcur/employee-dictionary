@@ -49,7 +49,10 @@ export class EmployeeStore {
 
   @action
   add(employee: EmployeeFormData) {
-    this.employees.push({...employee, id: maxId(this.employees)});
+    let newEmployee = {...employee, id: maxId(this.employees) + 1};
+    this.employees.push(newEmployee);
+
+    return newEmployee;
   }
 
   @action
@@ -59,8 +62,8 @@ export class EmployeeStore {
 
   @action
   update(employee: Employee) {
-    this.remove(employee.id);
-    this.add(employee);
+    const index = this.employees.findIndex(e => e.id === employee.id);
+    this.employees[index] = employee;
   }
 }
 

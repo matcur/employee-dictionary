@@ -11,7 +11,7 @@ export const EmployeeDictionary = observer(() => {
   const [selectedEmployee, setSelectedEmployee] = useState(employees[0]);
 
   const addNewEmployee = () => {
-    employeeStore.add({
+    const employee = employeeStore.add({
       id: -1,
       fullName: '',
       fired: false,
@@ -19,7 +19,8 @@ export const EmployeeDictionary = observer(() => {
       gender: 'male',
       birthday: '1999-30-10',
       colleagues: []
-    })
+    });
+    setSelectedEmployee(employee);
   }
 
   return (
