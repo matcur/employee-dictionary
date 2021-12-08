@@ -8,4 +8,4 @@ export type Employee = {
   colleagues?: Employee[]
 };
 
-export type NewEmployee = Omit<Employee, 'id'>
+export type EmployeeFormData = Employee & {id?: number}

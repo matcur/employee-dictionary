@@ -1,9 +1,9 @@
 import {useInput} from "../../hooks/useInput";
 import {ChangeEvent, FC, FormEvent, useState} from "react";
-import {Employee, NewEmployee} from "../../models";
+import {Employee, EmployeeFormData} from "../../models";
 
 type Props = {
-  onSave: (employee: NewEmployee) => void
+  onSave: (employee: EmployeeFormData) => void
   employees: Employee[]
   initialEmployee?: Employee
 }
@@ -16,9 +16,9 @@ type Errors = {
 
 export const BaseEmployeeForm: FC<Props> = ({onSave, employees, initialEmployee}) => {
   const fullName = useInput(initialEmployee?.fullName?? '');
-  const gender = useInput(initialEmployee?.gender?? '');
+  const gender = useInput(initialEmployee?.gender?? 'male');
   const birthday = useInput(initialEmployee?.birthday?? '');
-  const position = useInput(initialEmployee?.position?? '');
+  const position = useInput(initialEmployee?.position?? 'manager');
   const [fired, setFired] = useState(initialEmployee?.fired?? false);
   const [colleagues, setColleagues] = useState<Employee[]>(initialEmployee?.colleagues?? []);
   const [errors, setErrors] = useState<Errors>({} as Errors);
@@ -32,6 +32,7 @@ export const BaseEmployeeForm: FC<Props> = ({onSave, employees, initialEmployee}
     e.preventDefault();
 
     const employee = {
+      id: -1,
       fullName: fullName.value,
       gender: gender.value,
       position: position.value,
@@ -74,7 +75,7 @@ export const BaseEmployeeForm: FC<Props> = ({onSave, employees, initialEmployee}
         value={value}>{value}</option>
     )
   }
-  const validate = (employee: NewEmployee) => {
+  const validate = (employee: EmployeeFormData) => {
     const errors = {has: false} as Errors;
     if (employee.fullName === '') {
       errors.fullName = 'Full name is required';
@@ -120,7 +121,7 @@ export const BaseEmployeeForm: FC<Props> = ({onSave, employees, initialEmployee}
             {employees.map(e => <option value={e.id}>{e.fullName}</option>)}
           </select>
         </label>
-        <button type="submit">Add</button>
+        <button type="submit">Save</button>
       </form>
     </div>
   )
