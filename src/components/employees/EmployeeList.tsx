@@ -5,7 +5,7 @@ import {observer} from "mobx-react";
 
 type Props = {
   employees: Employee[]
-  onEmployeeClick: (employee: Employee) => void
+  onEmployeeClick: (id: number) => void
 }
 
 export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick}) => {

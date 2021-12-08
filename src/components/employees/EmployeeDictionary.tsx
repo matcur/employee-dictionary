@@ -3,12 +3,13 @@ import {useStores} from "../../stores";
 import {EmployeeList} from "./EmployeeList";
 import {BaseEmployeeForm} from "./BaseEmployeeForm";
 import {useState} from "react";
+import {Employee} from "../../models";
 
 export const EmployeeDictionary = observer(() => {
   const stores = useStores();
   const employeeStore = stores.employee;
   const employees = employeeStore.employees;
-  const [selectedEmployee, setSelectedEmployee] = useState(employees[0]);
+  const [selectedId, setSelectedId] = useState(employees[0].id);
 
   const addNewEmployee = () => {
     const employee = employeeStore.add({
@@ -20,7 +21,11 @@ export const EmployeeDictionary = observer(() => {
       birthday: '1999-30-10',
       colleagues: []
     });
-    setSelectedEmployee(employee);
+    setSelectedId(employee.id);
+  }
+
+  const getEmployById = (id: number) => {
+    return employees.find(e => e.id === id) as Employee;
   }
 
   return (
@@ -34,13 +39,13 @@ export const EmployeeDictionary = observer(() => {
         <div className="col-md-8">
           <EmployeeList
             employees={employees}
-            onEmployeeClick={setSelectedEmployee}/>
+            onEmployeeClick={setSelectedId}/>
         </div>
         <div className="col-md-4">
           <BaseEmployeeForm
-            onSave={employeeStore.update.bind(employeeStore)}
+            employeeStore={employeeStore}
             employees={employees}
-            initialEmployee={selectedEmployee}/>
+            employee={getEmployById(selectedId)}/>
         </div>
       </div>
     </div>
