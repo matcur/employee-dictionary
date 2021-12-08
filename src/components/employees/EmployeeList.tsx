@@ -20,11 +20,11 @@ export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick}) =
     <table className="employee-list">
       <thead>
         <tr>
-          <th>Full Name</th>
-          <th>Gender</th>
-          <th>Position</th>
-          <th>Birthday</th>
-          <th>Fired</th>
+          <td>Full Name</td>
+          <td>Gender</td>
+          <td>Position</td>
+          <td>Birthday</td>
+          <td>Fired</td>
         </tr>
       </thead>
       <tbody>

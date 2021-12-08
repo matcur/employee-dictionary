@@ -9,11 +9,11 @@ type Props = {
 export const EmployeeItem: FC<Props> = ({employee, onClick}) => {
   return (
     <tr className="employee-item" onClick={() => onClick(employee)}>
-      <th>{employee.fullName}</th>
-      <th>{employee.gender}</th>
-      <th>{employee.position}</th>
-      <th>{employee.birthday}</th>
-      <th>{employee.fired? 'yes': 'no'}</th>
+      <td>{employee.fullName}</td>
+      <td>{employee.gender}</td>
+      <td>{employee.position}</td>
+      <td>{employee.birthday}</td>
+      <td>{employee.fired? 'yes': 'no'}</td>
     </tr>
   )
 }
