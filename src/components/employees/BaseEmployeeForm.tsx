@@ -56,7 +56,8 @@ export const BaseEmployeeForm: FC<Props> = observer(({employee, employeeStore}) 
     return (
       <option
         key={index}
-        value={value}>{value}</option>
+        value={value}
+        selected={employee?.position === value}>{value}</option>
     )
   }
   const validate = (employee: EmployeeFormData) => {
