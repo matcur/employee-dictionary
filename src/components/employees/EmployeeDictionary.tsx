@@ -58,6 +58,7 @@ export const EmployeeDictionary = observer(() => {
       <div className="row justify-content-center">
         <div className="col-md-8">
           <EmployeeList
+            selectedEmployee={getEmployById(selectedId)}
             employees={employees}
             onEmployeeClick={trySetSelectedId}/>
         </div>

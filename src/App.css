@@ -15,3 +15,7 @@
 .employee-item:hover {
   cursor: pointer;
 }
+
+.selected-employee {
+  background: #ccc;
+}
