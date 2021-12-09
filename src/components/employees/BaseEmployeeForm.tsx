@@ -11,8 +11,8 @@ type Props = {
   initialErrors: Errors
 }
 
-export const BaseEmployeeForm: FC<Props> = observer((
-  {employee, employeeStore, initialErrors}) => {
+export const BaseEmployeeForm: FC<Props> = observer(
+  ({employee, employeeStore, initialErrors}) => {
   const positions = ['manager', 'developer', 'header'];
   const employees = employeeStore.employees;
   const possibleColleagues = employees.filter(e => e.id !== employee?.id);
