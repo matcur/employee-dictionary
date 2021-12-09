@@ -27,7 +27,7 @@ export const EmployeeDictionary = observer(() => {
       fired: false,
       position: 'position',
       gender: 'male',
-      birthday: '1999-30-10',
+      birthday: '',
       colleagues: []
     });
     setSelectedId(employee.id);
