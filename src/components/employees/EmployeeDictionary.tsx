@@ -33,11 +33,11 @@ export const EmployeeDictionary = observer(() => {
     setSelectedId(employee.id);
     setErrors({} as Errors);
   }
-  const selectEmployeeId = (id: number) => {
+  const trySetSelectedId = (id: number) => {
     const selected = getEmployById(selectedId);
     const errors = validateEmployee(selected);
     if (selected && errors.has) {
-      setErrors(errors)
+      setErrors(errors);
       return;
     }
 
@@ -59,7 +59,7 @@ export const EmployeeDictionary = observer(() => {
         <div className="col-md-8">
           <EmployeeList
             employees={employees}
-            onEmployeeClick={selectEmployeeId}/>
+            onEmployeeClick={trySetSelectedId}/>
         </div>
         <div className="col-md-4">
           <BaseEmployeeForm

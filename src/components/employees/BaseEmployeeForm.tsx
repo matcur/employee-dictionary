@@ -1,4 +1,4 @@
-import {ChangeEvent, FC, FormEvent, useEffect, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Employee} from "../../models";
 import {observer} from "mobx-react";
 import {EmployeeStore} from "../../stores/EmployeeStore";
@@ -19,31 +19,25 @@ export const BaseEmployeeForm: FC<Props> = observer((
   const [errors, setErrors] = useState<Errors>(initialErrors);
 
   useEffect(() => {
-    setErrors(initialErrors)
+    setErrors(initialErrors);
   }, [initialErrors])
 
-  const handleFullNameInput = (e: FormEvent<HTMLInputElement>) => {
-    const fullName = e.currentTarget.value;
+  const handleFullNameInput = (fullName: string) => {
     employeeStore.update({...employee, fullName});
   }
-  const handleGenderChange = (e: FormEvent<HTMLInputElement>) => {
-    const gender = e.currentTarget.value;
+  const handleGenderChange = (gender: string) => {
     employeeStore.update({...employee, gender});
   }
-  const handlePositionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const position = e.currentTarget.value;
+  const handlePositionChange = (position: string) => {
     employeeStore.update({...employee, position});
   }
-  const handleFiredChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const fired = e.currentTarget.checked;
+  const handleFiredChange = (fired: boolean) => {
     employeeStore.update({...employee, fired});
   }
-  const handleBirthdayChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let birthday = e.currentTarget.value;
+  const handleBirthdayChange = (birthday: string) => {
     employeeStore.update({...employee, birthday});
   }
-  const handleColleagueChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = e.currentTarget.selectedOptions;
+  const handleColleagueChange = (selectedOptions: HTMLCollectionOf<HTMLOptionElement>) => {
     const ids: string[] = [];
     for (let i = 0; i < selectedOptions.length; i++) {
       ids.push(selectedOptions[i].value);
@@ -68,7 +62,6 @@ export const BaseEmployeeForm: FC<Props> = observer((
         selected={employee?.position === value}>{value}</option>
     )
   }
-
   const makeColleague = (possibleColleague: Employee, index: number) => {
     const isColleague = employee?.colleagues?.includes(possibleColleague)
 
@@ -85,13 +78,16 @@ export const BaseEmployeeForm: FC<Props> = observer((
       <div>
         <div className="mb-3">
           <label className="form-label">Full Name</label>
-          <input value={employee?.fullName?? ''} onInput={handleFullNameInput} className="form-control" name="full-name"/>
+          <input
+            value={employee?.fullName?? ''}
+            onInput={e => handleFullNameInput(e.currentTarget.value)}
+            className="form-control" name="full-name"/>
           <span className="text-danger">{errors.fullName}</span>
         </div>
         <div className="form-check">
           <input
             checked={employee?.gender === 'male'}
-            onChange={handleGenderChange}
+            onChange={e => handleGenderChange(e.currentTarget.value)}
             type="radio"
             value="male"
             id="male"
@@ -102,7 +98,7 @@ export const BaseEmployeeForm: FC<Props> = observer((
         <div className="form-check mb-3">
           <input
             checked={employee?.gender === 'female'}
-            onChange={handleGenderChange}
+            onChange={e => handleGenderChange(e.currentTarget.value)}
             type="radio"
             value="female"
             id="female"
@@ -112,21 +108,35 @@ export const BaseEmployeeForm: FC<Props> = observer((
         </div>
         <div className="mb-3">
           <label>Position</label>
-          <select name="position" className="form-select" onChange={handlePositionChange}>
+          <select
+            name="position"
+            className="form-select"
+            onChange={e => handlePositionChange(e.currentTarget.value)}>
             {positions.map(makePositionOption)}
           </select>
         </div>
         <div className="mb-3">
           <label>Birthday</label>
-          <input value={employee?.birthday?? ''} onChange={handleBirthdayChange} type="date" className="form-select"/>
+          <input
+            value={employee?.birthday?? ''}
+            onChange={e => handleBirthdayChange(e.currentTarget.value)}
+            type="date"
+            className="form-select"/>
         </div>
         <div className="input-group mb-3">
-          <input checked={employee?.fired?? ''} className="form-check-input" onChange={handleFiredChange} type="checkbox"/>
+          <input
+            checked={employee?.fired?? ''}
+            className="form-check-input"
+            onChange={e => handleFiredChange(e.currentTarget.checked)}
+            type="checkbox"/>
           <label> Fired</label>
         </div>
         <label>
           Colleagues
-          <select className="form-select" onChange={handleColleagueChange} multiple>
+          <select
+            className="form-select"
+            onChange={e => handleColleagueChange(e.currentTarget.selectedOptions)}
+            multiple>
             {possibleColleagues.map(makeColleague)}
           </select>
         </label>
