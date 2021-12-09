@@ -1,7 +1,7 @@
 import {observer} from "mobx-react";
 import {useStores} from "../../stores";
 import {EmployeeList} from "./EmployeeList";
-import {BaseEmployeeForm} from "./BaseEmployeeForm";
+import {EmployeeForm} from "./EmployeeForm";
 import {useState} from "react";
 import {Employee} from "../../models";
 import {validateEmployee} from "../../utils/validateEmloyee";
@@ -62,7 +62,7 @@ export const EmployeeDictionary = observer(() => {
             onEmployeeClick={trySetSelectedId}/>
         </div>
         <div className="col-md-4">
-          <BaseEmployeeForm
+          <EmployeeForm
             initialErrors={errors}
             employeeStore={employeeStore}
             employee={getEmployById(selectedId)}/>
