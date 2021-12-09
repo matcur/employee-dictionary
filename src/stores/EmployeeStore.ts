@@ -18,7 +18,7 @@ export class EmployeeStore {
       id: 2,
       fullName: 'Ivanov Ivan Ivanovich',
       position: 'developer',
-      birthday: '1999-12-1',
+      birthday: '1999-12-01',
       gender: 'male',
       fired: false,
       colleagues: [],
