@@ -24,11 +24,11 @@ export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick, se
     <table className="employee-list table table-hover table-bordered mr-2">
       <thead>
         <tr>
-          <td>Full Name</td>
-          <td>Gender</td>
-          <td>Position</td>
-          <td>Birthday</td>
-          <td>Fired</td>
+          <td>ФИО</td>
+          <td>Пол</td>
+          <td>Должность</td>
+          <td>День рождения</td>
+          <td>Уволен</td>
         </tr>
       </thead>
       <tbody>

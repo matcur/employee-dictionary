@@ -25,8 +25,8 @@ export const EmployeeDictionary = observer(() => {
       id: -1,
       fullName: '',
       fired: false,
-      position: 'position',
-      gender: 'male',
+      position: 'разработчик',
+      gender: 'женщина',
       birthday: '',
       colleagues: []
     });
@@ -52,7 +52,7 @@ export const EmployeeDictionary = observer(() => {
     <div className="employee-dictionary">
       <div className="row mb-3">
         <div className="col-md-">
-          <button className="btn btn-outline-primary" onClick={addNewEmployee}>Add</button>
+          <button className="btn btn-outline-primary" onClick={addNewEmployee}>Добавить</button>
         </div>
       </div>
       <div className="row justify-content-center">

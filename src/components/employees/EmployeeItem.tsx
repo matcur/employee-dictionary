@@ -14,7 +14,7 @@ export const EmployeeItem: FC<Props> = ({employee, onClick, className = ''}) => 
       <td>{employee.gender}</td>
       <td>{employee.position}</td>
       <td>{employee.birthday}</td>
-      <td>{employee.fired? 'yes': 'no'}</td>
+      <td>{employee.fired? 'да': 'нет'}</td>
     </tr>
   )
 }

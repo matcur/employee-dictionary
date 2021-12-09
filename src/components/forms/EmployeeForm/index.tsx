@@ -39,7 +39,7 @@ export const EmployeeForm: FC<Props> = observer(
         <button
           disabled={employee === undefined}
           onClick={handleRemoveClick}
-          className="btn btn-outline-danger">Remove</button>
+          className="btn btn-outline-danger">Удалить</button>
       </div>
     </div>
   )

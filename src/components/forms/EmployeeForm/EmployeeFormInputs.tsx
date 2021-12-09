@@ -12,7 +12,7 @@ type Props = {
 
 export const EmployeeFormInputs: FC<Props> = observer(
   ({employee, employeeStore, errors}) => {
-  const positions = ['manager', 'developer', 'header'];
+  const positions = ['разработчик', 'менеджер', 'рекрутер'];
   const employees = employeeStore.employees;
   const possibleColleagues = employees.filter(e => e.id !== employee?.id);
 
@@ -62,7 +62,7 @@ export const EmployeeFormInputs: FC<Props> = observer(
   return (
     <>
       <div className="mb-3">
-        <label className="form-label">Full Name</label>
+        <label className="form-label">ФИО</label>
         <input
           value={employee?.fullName?? ''}
           onInput={e => handleFullNameInput(e.currentTarget.value)}
@@ -71,28 +71,28 @@ export const EmployeeFormInputs: FC<Props> = observer(
       </div>
       <div className="form-check">
         <input
-          checked={employee?.gender === 'male'}
+          checked={employee?.gender === 'мужчина'}
           onChange={e => handleGenderChange(e.currentTarget.value)}
           type="radio"
-          value="male"
+          value="мужчина"
           id="male"
           name="gender"
           className="form-check-input"/>
-        <label className="form-check-label" htmlFor="male">Male</label>
+        <label className="form-check-label" htmlFor="male">Мужчина</label>
       </div>
       <div className="form-check mb-3">
         <input
-          checked={employee?.gender === 'female'}
+          checked={employee?.gender === 'женщина'}
           onChange={e => handleGenderChange(e.currentTarget.value)}
           type="radio"
-          value="female"
+          value="женщина"
           id="female"
           name="gender"
           className="form-check-input"/>
-        <label className="form-check-label" htmlFor="female">Female</label>
+        <label className="form-check-label" htmlFor="female">Женщина</label>
       </div>
       <div className="mb-3">
-        <label>Position</label>
+        <label>Должность</label>
         <select
           name="position"
           className="form-select"
@@ -101,7 +101,7 @@ export const EmployeeFormInputs: FC<Props> = observer(
         </select>
       </div>
       <div className="mb-3">
-        <label>Birthday</label>
+        <label>День рождения</label>
         <input
           value={employee?.birthday?? ''}
           onChange={e => handleBirthdayChange(e.currentTarget.value)}
@@ -113,11 +113,12 @@ export const EmployeeFormInputs: FC<Props> = observer(
           checked={employee?.fired?? ''}
           className="form-check-input"
           onChange={e => handleFiredChange(e.currentTarget.checked)}
-          type="checkbox"/>
-        <label> Fired</label>
+          type="checkbox"
+          id="fired"/>
+        <label htmlFor="fired">Уволен</label>
       </div>
       <label>
-        Colleagues
+        Коллеги
         <select
           className="form-select"
           onChange={e => handleColleagueChange(e.currentTarget.selectedOptions)}
