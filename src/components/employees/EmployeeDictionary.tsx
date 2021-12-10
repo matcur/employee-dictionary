@@ -56,7 +56,7 @@ export const EmployeeDictionary = observer(() => {
   return (
     <div className="employee-dictionary">
       <div className="row mb-3">
-        <div className="col-md-">
+        <div className="col-md-8 new-employee-btn-wrap">
           <button className="btn btn-outline-primary" onClick={tryAddNewEmployee}>Добавить</button>
         </div>
       </div>

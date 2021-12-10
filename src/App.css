@@ -23,3 +23,8 @@
 .colleagues-select {
   min-width: 270px;
 }
+
+.new-employee-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
