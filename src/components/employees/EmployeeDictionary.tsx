@@ -55,6 +55,11 @@ export const EmployeeDictionary = observer(() => {
 
   const handleInput = () => {
     const selected = getEmployById(selectedId);
+
+    if (selected === undefined) {
+      return;
+    }
+
     const errors = validateEmployee(selected);
     setErrors(errors);
   }
