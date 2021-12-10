@@ -1,9 +1,8 @@
-import {action, makeAutoObservable, observable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import {Employee, EmployeeFormData} from "../models";
 import {maxId} from "../utils/maxId";
 
 export class EmployeeStore {
-  @observable
   employees: Employee[] = [
     {
       id: 1,
@@ -47,7 +46,6 @@ export class EmployeeStore {
     makeAutoObservable(this);
   }
 
-  @action
   add(employee: EmployeeFormData) {
     let newEmployee = {...employee, id: maxId(this.employees) + 1};
     this.employees.push(newEmployee);
@@ -55,12 +53,10 @@ export class EmployeeStore {
     return newEmployee;
   }
 
-  @action
   remove(id: number) {
     this.employees = this.employees.filter(e => e.id !== id);
   }
 
-  @action
   update(employee: Employee) {
     const index = this.employees.findIndex(e => e.id === employee.id);
     this.employees[index] = employee;
