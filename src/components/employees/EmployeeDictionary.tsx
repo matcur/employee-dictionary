@@ -75,7 +75,8 @@ export const EmployeeDictionary = observer(() => {
         </div>
         <div className="col-md-4">
           <EmployeeForm
-            initialErrors={errors}
+            setErrors={setErrors}
+            errors={errors}
             employeeStore={employeeStore}
             employee={getEmployById(selectedId)}
             onInput={handleInput}/>

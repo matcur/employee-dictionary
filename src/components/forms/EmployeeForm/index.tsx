@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import {Employee} from "../../../models";
 import {observer} from "mobx-react";
 import {EmployeeStore} from "../../../stores/EmployeeStore";
@@ -8,18 +8,13 @@ import {EmployeeFormInputs} from "./EmployeeFormInputs";
 type Props = {
   employeeStore: EmployeeStore
   employee: Employee
-  initialErrors: Errors
+  errors: Errors
   onInput: () => void
+  setErrors: (value: Errors) => void
 }
 
 export const EmployeeForm: FC<Props> = observer(
-  ({employee, employeeStore, initialErrors, onInput}) => {
-  const [errors, setErrors] = useState<Errors>(initialErrors);
-
-  useEffect(() => {
-    setErrors(initialErrors);
-  }, [initialErrors])
-
+  ({employee, employeeStore, errors, setErrors, onInput}) => {
   const handleRemoveClick = () => {
     employeeStore.remove(employee.id);
     setErrors({has: false});
