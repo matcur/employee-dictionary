@@ -19,3 +19,7 @@
 .selected-employee {
   background: #ccc;
 }
+
+.colleagues-select {
+  min-width: 270px;
+}

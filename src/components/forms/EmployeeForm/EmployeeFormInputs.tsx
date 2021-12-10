@@ -120,7 +120,7 @@ export const EmployeeFormInputs: FC<Props> = observer(
       <label>
         Коллеги
         <select
-          className="form-select"
+          className="form-select colleagues-select"
           onChange={e => handleColleagueChange(e.currentTarget.selectedOptions)}
           multiple>
           {possibleColleagues.map(makeColleague)}
