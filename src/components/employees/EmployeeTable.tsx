@@ -1,6 +1,6 @@
 import {Employee} from "../../models";
 import {FC} from "react";
-import {EmployeeItem} from "./EmployeeItem";
+import {EmployeeRow} from "./EmployeeRow";
 import {observer} from "mobx-react";
 
 type Props = {
@@ -9,11 +9,11 @@ type Props = {
   selectedEmployee: Employee
 }
 
-export const EmployeeList: FC<Props> = observer(({employees, onEmployeeClick, selectedEmployee}) => {
+export const EmployeeTable: FC<Props> = observer(({employees, onEmployeeClick, selectedEmployee}) => {
   const makeEmployee = (employee: Employee, index: number) => {
     const isSelected = employee === selectedEmployee;
 
-    return <EmployeeItem
+    return <EmployeeRow
       key={index}
       employee={employee}
       onClick={onEmployeeClick}

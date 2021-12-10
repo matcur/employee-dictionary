@@ -1,6 +1,6 @@
 import {observer} from "mobx-react";
 import {useStores} from "../../stores";
-import {EmployeeList} from "./EmployeeList";
+import {EmployeeTable} from "./EmployeeTable";
 import {EmployeeForm} from "../forms/EmployeeForm";
 import {useState} from "react";
 import {Employee} from "../../models";
@@ -62,7 +62,7 @@ export const EmployeeDictionary = observer(() => {
       </div>
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <EmployeeList
+          <EmployeeTable
             selectedEmployee={getEmployById(selectedId)}
             employees={employees}
             onEmployeeClick={trySetSelectedId}/>

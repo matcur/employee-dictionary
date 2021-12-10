@@ -7,7 +7,7 @@ type Props = {
   className: string
 }
 
-export const EmployeeItem: FC<Props> = ({employee, onClick, className = ''}) => {
+export const EmployeeRow: FC<Props> = ({employee, onClick, className = ''}) => {
   return (
     <tr className={'employee-item ' + className} onClick={() => onClick(employee.id)}>
       <td>{employee.fullName}</td>
