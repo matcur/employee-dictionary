@@ -53,6 +53,12 @@ export const EmployeeDictionary = observer(() => {
     return false;
   }
 
+  const handleInput = () => {
+    const selected = getEmployById(selectedId);
+    const errors = validateEmployee(selected);
+    setErrors(errors);
+  }
+
   return (
     <div className="employee-dictionary">
       <div className="row mb-3">
@@ -71,7 +77,8 @@ export const EmployeeDictionary = observer(() => {
           <EmployeeForm
             initialErrors={errors}
             employeeStore={employeeStore}
-            employee={getEmployById(selectedId)}/>
+            employee={getEmployById(selectedId)}
+            onInput={handleInput}/>
         </div>
       </div>
     </div>

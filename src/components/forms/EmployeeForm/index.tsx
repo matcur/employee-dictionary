@@ -9,10 +9,11 @@ type Props = {
   employeeStore: EmployeeStore
   employee: Employee
   initialErrors: Errors
+  onInput: () => void
 }
 
 export const EmployeeForm: FC<Props> = observer(
-  ({employee, employeeStore, initialErrors}) => {
+  ({employee, employeeStore, initialErrors, onInput}) => {
   const [errors, setErrors] = useState<Errors>(initialErrors);
 
   useEffect(() => {
@@ -30,7 +31,8 @@ export const EmployeeForm: FC<Props> = observer(
         <EmployeeFormInputs
           employeeStore={employeeStore}
           employee={employee}
-          errors={errors}/>
+          errors={errors}
+          onInput={onInput}/>
         <button
           disabled={employee === undefined}
           onClick={handleRemoveClick}

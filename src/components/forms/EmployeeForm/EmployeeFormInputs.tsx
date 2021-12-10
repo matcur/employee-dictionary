@@ -8,36 +8,44 @@ type Props = {
   employeeStore: EmployeeStore
   employee: Employee
   errors: Errors
+  onInput: () => void
 }
 
 export const EmployeeFormInputs: FC<Props> = observer(
-  ({employee, employeeStore, errors}) => {
+  ({employee, employeeStore, errors, onInput}) => {
   const positions = ['разработчик', 'менеджер', 'рекрутер'];
   const employees = employeeStore.employees;
   const possibleColleagues = employees.filter(e => e.id !== employee?.id);
 
   const handleFullNameInput = (fullName: string) => {
     employeeStore.update({...employee, fullName});
+    onInput();
   }
   const handleGenderChange = (gender: string) => {
     employeeStore.update({...employee, gender});
+    onInput();
   }
   const handlePositionChange = (position: string) => {
     employeeStore.update({...employee, position});
+    onInput();
   }
   const handleFiredChange = (fired: boolean) => {
     employeeStore.update({...employee, fired});
+    onInput();
   }
   const handleBirthdayChange = (birthday: string) => {
     employeeStore.update({...employee, birthday});
+    onInput();
   }
   const handleColleagueChange = (selectedOptions: HTMLCollectionOf<HTMLOptionElement>) => {
     const ids: string[] = [];
     for (let i = 0; i < selectedOptions.length; i++) {
       ids.push(selectedOptions[i].value);
     }
+
     const colleagues = employees.filter(e => ids.includes(e.id.toString()));
     employeeStore.update({...employee, colleagues})
+    onInput();
   }
 
   const makePositionOption = (value: string, index: number) => {
@@ -58,6 +66,7 @@ export const EmployeeFormInputs: FC<Props> = observer(
         selected={isColleague}>{possibleColleague.fullName}</option>
     )
   }
+  console.log(errors)
 
   return (
     <>
