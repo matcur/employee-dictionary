@@ -26,7 +26,7 @@ export const EmployeeForm: FC<Props> = observer(
   }
 
   return (
-    <div className="card card-body">
+    <div className="card card-body employee-form">
       <div>
         <EmployeeFormInputs
           employeeStore={employeeStore}

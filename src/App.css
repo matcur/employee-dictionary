@@ -24,6 +24,10 @@
   min-width: 270px;
 }
 
+.employee-form {
+  min-width: 310px;
+}
+
 .new-employee-btn-wrap {
   display: flex;
   justify-content: flex-end;

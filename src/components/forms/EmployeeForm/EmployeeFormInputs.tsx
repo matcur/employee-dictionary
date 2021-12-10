@@ -66,7 +66,6 @@ export const EmployeeFormInputs: FC<Props> = observer(
         selected={isColleague}>{possibleColleague.fullName}</option>
     )
   }
-  console.log(errors)
 
   return (
     <>
