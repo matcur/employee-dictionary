@@ -13,11 +13,8 @@ export const EmployeeDictionary = observer(() => {
   const [selectedId, setSelectedId] = useState<number>();
   const [errors, setErrors] = useState({} as Errors)
 
-  const addNewEmployee = () => {
-    const selected = getEmployById(selectedId);
-    const errors = validateEmployee(selected);
-    if (selected && errors.has) {
-      setErrors(errors);
+  const tryAddNewEmployee = () => {
+    if(hasErrors()) {
       return;
     }
 
@@ -31,28 +28,36 @@ export const EmployeeDictionary = observer(() => {
       colleagues: []
     });
     setSelectedId(employee.id);
-    setErrors({} as Errors);
   }
   const trySetSelectedId = (id: number) => {
-    const selected = getEmployById(selectedId);
-    const errors = validateEmployee(selected);
-    if (selected && errors.has) {
-      setErrors(errors);
+    if(hasErrors()) {
       return;
     }
 
     setSelectedId(id);
-    setErrors({} as Errors);
   }
   const getEmployById = (id?: number) => {
     return employees.find(e => e.id === id) as Employee;
+  }
+  const hasErrors = () => {
+    const selected = getEmployById(selectedId);
+    const errors = validateEmployee(selected);
+    if (selected && errors.has) {
+      setErrors(errors);
+
+      return true;
+    }
+
+    setErrors({has: false});
+
+    return false;
   }
 
   return (
     <div className="employee-dictionary">
       <div className="row mb-3">
         <div className="col-md-">
-          <button className="btn btn-outline-primary" onClick={addNewEmployee}>Добавить</button>
+          <button className="btn btn-outline-primary" onClick={tryAddNewEmployee}>Добавить</button>
         </div>
       </div>
       <div className="row justify-content-center">

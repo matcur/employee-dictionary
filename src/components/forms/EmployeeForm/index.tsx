@@ -22,11 +22,13 @@ export const EmployeeForm: FC<Props> = observer(
 
   const handleRemoveClick = () => {
     const errors = validateEmployee(employee)
-    if (!errors.has) {
-      employeeStore.remove(employee.id);
+    if (errors.has) {
+      setErrors(errors);
+      return;
     }
 
-    setErrors(errors);
+    employeeStore.remove(employee.id);
+    setErrors({has: false})
   }
 
   return (
