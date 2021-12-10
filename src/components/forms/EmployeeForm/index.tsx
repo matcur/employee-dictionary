@@ -3,7 +3,6 @@ import {Employee} from "../../../models";
 import {observer} from "mobx-react";
 import {EmployeeStore} from "../../../stores/EmployeeStore";
 import {Errors} from "../../employees/EmployeeDictionary";
-import {validateEmployee} from "../../../utils/validateEmloyee";
 import {EmployeeFormInputs} from "./EmployeeFormInputs";
 
 type Props = {
@@ -21,14 +20,8 @@ export const EmployeeForm: FC<Props> = observer(
   }, [initialErrors])
 
   const handleRemoveClick = () => {
-    const errors = validateEmployee(employee)
-    if (errors.has) {
-      setErrors(errors);
-      return;
-    }
-
     employeeStore.remove(employee.id);
-    setErrors({has: false})
+    setErrors({has: false});
   }
 
   return (
